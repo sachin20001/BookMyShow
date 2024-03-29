@@ -1,19 +1,18 @@
 package org.example.book_my_show.services;
 
 import org.example.book_my_show.models.User;
-import org.example.book_my_show.repo.UserRepo;
+import org.example.book_my_show.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class UserService {
-    private UserRepo userRepo;
+    private UserRepository userRepo;
 
 
     @Autowired
-    public UserService(UserRepo userRepo)
+    public UserService(UserRepository userRepo)
     {
         this.userRepo=userRepo;
     }

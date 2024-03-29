@@ -1,10 +1,10 @@
 package org.example.book_my_show.models;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.example.book_my_show.models.enums.Feature;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -14,20 +14,26 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Auditorium extends Base {
     private String name;
     private int numRows;
     private int numCols;
 
     @ElementCollection
-    @Enumerated(EnumType.ORDINAL)
-    private List<Feature> features;
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private List<Feature> features=new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "auditorium")
-    private List<Seat> seats;
+    private List<Seat> seats=new ArrayList<>();
 
-    @OneToMany(mappedBy = "auditorium")
-    private List<MovieShow> shows;
+    @Builder.Default
+    @OneToMany(mappedBy = "auditorium",cascade = CascadeType.ALL)
+    private List<MovieShow> shows=new ArrayList<>();
 
     @ManyToOne
     private Theatre theatre;

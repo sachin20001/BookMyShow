@@ -1,11 +1,12 @@
 package org.example.book_my_show.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -13,6 +14,9 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Theatre extends Base {
     private String name;
     private String address;
@@ -20,7 +24,9 @@ public class Theatre extends Base {
 
     @ManyToOne
     private City city;
-    @OneToMany(mappedBy = "theatre")
-    private List<Auditorium> auditoriums;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "theatre",cascade = CascadeType.ALL)
+    private List<Auditorium> auditoriums=new ArrayList<>();
 
 }
