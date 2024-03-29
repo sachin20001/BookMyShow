@@ -1,12 +1,12 @@
 package org.example.book_my_show.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.stereotype.Component;
+import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +14,9 @@ import java.util.List;
 
 @Entity
 @Getter@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Ticket extends Base {
     private Date bookingTime;
 
@@ -21,9 +24,12 @@ public class Ticket extends Base {
     @ManyToOne
     private User bookedBy;
 
-    @OneToMany(mappedBy = "ticket")
-    private List<SeatInShow> seats;
 
+    @Builder.Default
     @OneToMany(mappedBy = "ticket")
-    private List<Payment> payments;
+    private List<ShowSeat> seats=new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "ticket",cascade = CascadeType.ALL)
+    private List<Payment> payments=new ArrayList<>();
 }
